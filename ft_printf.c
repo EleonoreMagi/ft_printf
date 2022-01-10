@@ -6,97 +6,95 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:00:51 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/02 04:38:21 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 05:31:30 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
  #include "ft_printf.h"
 
-t_print *ft_initialize_symbol(t_print	*symbol)
+t_print *ft_initialize_table(t_print	*table)
 {
-	symbol->type = 0;
-	symbol->width = 0;
-	symbol->star = 0;
-	symbol->minus = 0;
-	symbol->is_zero = 0;
-	symbol->dot = 0;
-	symbol->dash = 0;
-	symbol->space = 0;
-	symbol->plus = 0;
-	symbol->percent = 0;
-	return (symbol);
+	table->length = 0;
+	table->width = 0;
+	table->zero = 0;
+	table->prc = 0;
+	table->minus = 0;
+	table->is_zero = 0;
+	table->sign = 'a';
+	table->dot = 0;
+	table->alt = 0;
+	table->space = 0;
+	table->plus = 0;
+	return (table);
 }
 
-int	ft_parse_flag(const char *symbol, int i, t_print *flag, va_list args)
+int	ft_is_flag(int c)
 {
-	while (symbol[i] && (ft_isdigit(symbol[i] || ft_is_type(symbol[i])
-		|| ft_is_flag(symbol[i])))
+	return ((c == '-') || (c == '0') || (c == '.')
+		|| (c == '*') || (c == '#') || (c == ' ')
+		|| (c == '+'))
+}
+
+int	ft_parse_flag(const char *format, int i, t_print *table, va_list args)
+{
+	while (format[i] && (ft_isdigit(format[i] || ft_is_flag(format[i])))
 	{
-		if (symbol[i] == '0' && flag->width == 0 && flag->minus == 0)
-			flag->zero = 1;
-		else if (symbol[i] == '.')
-			i = ft_flag_dot(symbol, i, flag, args);
-		else if (symbol[i] == '-')
-			flag = ft_flag_minus(flag);
-		else if (symbol[i] == '*')
-			flag = ft_flag_width(args, flag);
-		else if (symbol[i] == '#')
-			flag = ft_flag_dash(args, flag);
-		else if (symbol[i] == ' ')
-			flag = ft_flag_space(args, flag);
-		else if (symbol[i] == '+')
-			flag = ft_flag_plus(args, flag);
-		if (ft_isdigit(symbol[i]))
-			flag = ft_flag_digit(symbol[i], flag);
-		else if (ft_is_type(symbol[i]))
-		{
-			flag->type = symbol[i];
-			break;
-		}
+		if (format[i] == '0' && table->prc == 0 && table->minus == 0)
+			table->zero = 1;
+		else if (format[i] == '.')
+			i += ft_flag_dot(format, i, table) - 1;
+		else if (format[i] == '-')
+			ft_flag_minus(table);
+		else if (format[i] == '*')
+			ft_flag_width(table);
+		else if (format[i] == '#')
+			table->alt = 1;
+		else if (format[i] == ' ' && table->plus == 0)
+			table->space = 1;
+		else if (format[i] == '+')
+			ft_flag_plus(table);
+		else if (ft_isdigit(format[i]))
+			i += ft_flag_digit(format, i, table) - 1;
 		i++;
 	}
 	return (i);
 }
 
-int	ft_save_symbol(const char	*save, t_print *symbol, va_list args)
+int	ft_evaluate_flags(const char *format, t_print *table, int i)
 {
-	int		i;
-	int 	count;
-	t_print	*flag;
+	int		pos;
 
-	i = 0;
-	count = 0;
-	while (!symbol[i])
-	{
-		flag = ft_initialize_symbol(symbol);
-		if (symbol[i] == '%' && symbol[i+1])
-		{
-			i = ft_parse_flag(symbol, ++i, flag, args);
-			if (ft_is_type(symbol[i]))
-				count += ft_parse_type(((char)flag->type, flag, args))
-			else if (symbol[i])
-				count += ft_putchar(symbol[i]);
-		}
-		else if (symbol[i] != '%')
-			count += ft_putchar(symbol[i]);
-		i++;
-	}
+	pos = 0;
+	while (!ft_is_type(format[pos]))
+		pos += ft_parse_flag(format[pos]);
+	ft_parse_type(format[pos], table);
+	return (pos++);
 }
 
  int	ft_printf(const char *format, ...)
  {
-	 const char	*save;
-	 va_list	args;
+	 int		i;
 	 int		count;
-	 t_print	*symbol;
+	 t_print	*table;
 
+	 if (format == NULL)
+	 	return (0);
 	 count = 0;
-	 symbol = (t_print *)malloc(sizeof(t_print));
-	 if(!symbol)
+	 table = (t_print *)malloc(sizeof(t_print));
+	 if(!table)
 	 	return (-1);
-	 va_start(args, format);
-	 count += ft_save_symbol(symbol, args);
-	 va_end(args)
-	 free((char *)save);
+	 ft_initialize_table(table);
+	 va_start(table->args, format);
+	 while(format[i])
+	 {
+		 if(format[i] =='%')
+		 	i = ft_evaluate_flags(format, table, i + 1);
+		 else
+		 	count += write(1, &format[i], 1);
+		i++;
+	 }
+	 va_end(table->args);
+	 count += table->length;
+	 free((char *)table);
 	 return (count);
  }

@@ -6,7 +6,7 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 04:19:06 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/02 04:38:09 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 05:31:56 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,40 @@ int	ft_is_type(int c)
 {
 	return ((c == 'c') || (c == 's') || (c == 'p')
 		|| (c == 'd') || (c == 'i') || (c == 'u')
-		|| (c == 'x') || (c == 'X') || (c == 'c%'))
+		|| (c == 'x') || (c == 'X') || (c == '%'))
 }
 
-int	ft_parse_type(int c, t_print *flag, va_list args)
+t_print *ft_clear_table(t_print	*table)
 {
-	int	count;
+	table->width = 0;
+	table->star = 0;
+	table->minus = 0;
+	table->is_zero = 0;
+	table->dot = 0;
+	table->dash = 0;
+	table->space = 0;
+	table->plus = 0;
+	table->percent = 0;
+	return (table);
+}
 
-	count = 0;
+void	ft_parse_type(char c, t_print *table)
+{
+	table->type = c;
 	if (c == 'c')
-		count = ft_parse_char(va_arg(args, int), flag);
+		ft_parse_char(table);
 	else if (c == 's')
-		count = ft_parse_string(va_arg(args, char *), flag);
+		ft_parse_string(table);
 	else if (c == 'p')
-		count = ft_parse_ptr(va_arg(args, unsigned long long), flag);
+		ft_parse_ptr(table);
 	else if (c == 'd' || c == 'i')
-		count = ft_parse_int(va_arg(args, int), flag);
+		ft_parse_int(table);
 	else if (c == 'u')
-		count = ft_parse_unit((unsigned int)va_arg(args, unsigned int), flag);
+		ft_parse_unsigned_int(table);
 	else if (c == 'x')
-		count = ft_parse_hex(va_arg(args, unsigned int), 1, flag);
+		ft_parse_hex_sm(table);
 	else if (c == 'X')
-		count = ft_parse_hex(va_arg(args, unsigned int), 0, flag);
+		ft_parse_hex_bg(table);
 	else if (c == '%')
-		count = ft_parse_percent(flag);
-	return (count);
+		ft_parse_percent(table);
 }

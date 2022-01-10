@@ -6,53 +6,66 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 03:07:18 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/02 04:38:25 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 05:30:31 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_is_flag(int c)
+void	ft_flag_minus(t_print	*table)
 {
-	return ((c == '-') || (c == '0') || (c == '.')
-		|| (c == '*') || (c == '#') || (c == ' ')
-		|| (c == '+'))
+	table->minus = 1;
+	table->zero = 0;
 }
 
-t_print	*ft_flag_minus(t_print	*flag)
+void	ft_flag_plus(t_print	*table)
 {
-	flag->minus = 1;
-	flag->zero = 0;
-	return (flag);
+	table->plus = 1;
+	table->space = 0;
 }
 
-t_print	*ft_flag_with(va_list args, t_print	*flag)
+void	ft_flag_width(t_print	*table)
 {
-	flag->star = 1;
-	flag->width = va_arg(args, int);
-	if (flag->width < 0)
+	table->width = va_arg(table->args, int);
+	if (table->width < 0)
 	{
-		flag->minus = 1;
-		flag->width *= -1;
+		table->minus = 1;
+		table->width *= -1;
 	}
-	return (flag);
 }
 
-int	ft_flag_dot(const char *symbol, int start,
-		t_print *flag, va_list args)
+int	ft_flag_dot(const char *format, int start,
+		t_print *table)
 {
 	int	i;
 
+	table->dot = 1;
 	i = start;
-	i++;
-	if (symbol[i] == '*')
+	if (format[++i] == '*')
 	{
-		flag->dot = va_args(args, int);
+		table->prc = va_args(table->args, int);
+		if (table->prc < 0)
+		{
+			table->dot = 0;
+			table->prc = 0;
+		}
 		i++;
 	}
 	else
 	{
-		flag->dot = 0;
-		while (ft_isdigit(symbol[i]))
-			flag->dot = (flag->dot * 10) + (symbol[i++] - '0');
+		while (ft_isdigit(format[++i]))
+			table->prc = (table->prc * 10) + (format[i] - '0');
+	}
+	return (i);
+}
+
+int	ft_flag_digit(const char *format, int start,
+		t_print *table)
+{
+	int	i;
+
+	i = start;
+	while (ft_isdigit(format[++i]))
+	{
+		table->width = (table->width * 10) + (format[i] - '0');
 	}
 	return (i);
 }

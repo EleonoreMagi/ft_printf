@@ -6,7 +6,7 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:01:37 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/02 04:38:17 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 05:31:21 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,18 @@
 typedef struct s_printf
 {
 	va_list	args;
-	int		type;
+	char	type;
+	int		length;
+	int		zero;
 	int 	width;
+	int		prc;
 	int		minus;
 	int		is_zero;
+	char	sign;
 	int		dot;
-	int		dash;
+	int		alt;
 	int 	space;
 	int		plus;
-	int		percent;
 	
 }				t_printf;
 
