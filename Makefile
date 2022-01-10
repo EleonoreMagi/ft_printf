@@ -1,32 +1,39 @@
-LIBFT = ./libft/libft.a
+NAME 	= libftprintf.a
 
-NAME = libftprintf.a
+SRCS 	= ft_printf.c \
+			ft_flags.c \
+			ft_parse_char.c \
+			ft_parse_diu.c \
+			ft_parse_ptrhex.c \
+			ft_types.c \
+			ft_utils.c \
+			ft_utils2.c
 
-SRCS = ft_printf.c \
-		src/ft_.c
+OBJS 	= $(SRCS:.c=.o)
 
-OBJS = $(SRCS:/c=.o)
+CC = 	gcc
 
-CC = gcc
+CFLAGS 	= -c -Wall -Wextra -Werror
 
-FLAGS = -c -Wall -Wextra -Werror
+RM		= rm -f
 
-INCLUDES = -I./includes
+.c.o:
+			@$(CC) $(CFLAGS) -c $< -o $(<:.c=.o)
 
-$(NAME): $(OBJS)
-		$(MAKE) bonus -C ./libft
-		cp libft/libft.a $(NAME)
-		$(CC) $(FLAGS) $(INCLUDES) $(SRCS)
-		ar -rcs $(NAME) $(OBJS)
+$(NAME): 	$(OBJS)
+			@ar -rcs $(NAME) $(OBJS)
 
-all: $(NAME)
+all: 		$(NAME)
 
-clean:
-		$(MAKE) clean -C ./libft
-		rm -rf $(OBJS)
+bonus:		all
 
-fclean: clean
-		$(MAKE) fclean -C ./libft
-		rm -rf $(NAME)
+clean:		@rm -f $(OBJS)
 
-re: 	fclean all
+fclean: 	clean
+			$(RM) $(NAME)
+
+re: 		fclean all
+
+rebonus: 	fclean bonus
+
+.PHONY:		all clean fclean re bonus rebonus

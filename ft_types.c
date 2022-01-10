@@ -6,28 +6,30 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 04:19:06 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 05:31:56 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 06:33:40 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+ #include "ft_printf.h"
 
 int	ft_is_type(int c)
 {
 	return ((c == 'c') || (c == 's') || (c == 'p')
 		|| (c == 'd') || (c == 'i') || (c == 'u')
-		|| (c == 'x') || (c == 'X') || (c == '%'))
+		|| (c == 'x') || (c == 'X') || (c == '%'));
 }
 
 t_print *ft_clear_table(t_print	*table)
 {
+	table->zero = 0;
 	table->width = 0;
-	table->star = 0;
+	table->prc = 0;
 	table->minus = 0;
-	table->is_zero = 0;
 	table->dot = 0;
-	table->dash = 0;
+	table->sign = 'a';
+	table->alt = 0;
 	table->space = 0;
 	table->plus = 0;
-	table->percent = 0;
 	return (table);
 }
 

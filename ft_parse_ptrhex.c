@@ -10,7 +10,9 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-char		*ft_ulitoa_base(unsigned long int n, char *base)
+ #include "ft_printf.h"
+
+char	*ft_ulitoa_base(unsigned long int n, char *base)
 {
 	char					*str;
 	unsigned long long int	nbr;
@@ -43,7 +45,7 @@ void	ft_parse_ptr(t_print *table)
 	
 	ptr = va_arg(table->args, unsigned long int);
 	c_ptr = ft_ulitoa_base(ptr, "0123456789abcdef");
-	ft_print_flags(c_ptr, ft_strlen(c_ptr), table)
+	ft_print_flags(c_ptr, ft_strlen(c_ptr), table);
 	ft_clear_table(table);
 }
 
@@ -54,7 +56,7 @@ void	ft_parse_hex_sm(t_print *table)
 	
 	hex = va_arg(table->args, unsigned int);
 	c_hex = ft_ulitoa_base((unsigned long int)hex, "0123456789abcdef");
-	ft_print_flags(c_hex, ft_strlen(c_hex), table)
+	ft_print_flags(c_hex, ft_strlen(c_hex), table);
 	ft_clear_table(table);
 }
 
@@ -65,6 +67,6 @@ void	ft_parse_hex_bg(t_print *table)
 	
 	hex = (unsigned long int)va_arg(table->args, unsigned int);
 	c_hex = ft_ulitoa_base((unsigned long int)hex, "0123456789ABCDEF");
-	ft_print_flags(c_hex, ft_strlen(c_hex), table)
+	ft_print_flags(c_hex, ft_strlen(c_hex), table);
 	ft_clear_table(table);
 }

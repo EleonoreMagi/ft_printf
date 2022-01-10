@@ -6,9 +6,11 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 03:07:18 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 05:30:31 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 06:22:17 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+ #include "ft_printf.h"
 
 void	ft_flag_minus(t_print	*table)
 {
@@ -41,7 +43,7 @@ int	ft_flag_dot(const char *format, int start,
 	i = start;
 	if (format[++i] == '*')
 	{
-		table->prc = va_args(table->args, int);
+		table->prc = va_arg(table->args, int);
 		if (table->prc < 0)
 		{
 			table->dot = 0;

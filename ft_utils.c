@@ -6,11 +6,12 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 01:55:03 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 05:31:11 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 06:36:45 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
+ #include "ft_printf.h"
 
 void	ft_putchar_count(char c, t_print *table)
 {
@@ -19,7 +20,7 @@ void	ft_putchar_count(char c, t_print *table)
 
 }
 
-void ft_putstr_count(char *str, int len, t_print *table)
+void	ft_putstr_count(char *str, int len, t_print *table)
 {
 	int	i;
 
@@ -43,9 +44,9 @@ static void	ft_print_width(t_print *table, int len)
 	while (table->width > table->prc)
 	{
 		if (table->zero)
-			ft_putchar_count("0", table);
+			ft_putchar_count('0', table);
 		else
-			ft_putchar_count(" ", table);
+			ft_putchar_count(' ', table);
 		table->width--;
 	}
 }
@@ -55,11 +56,11 @@ static void	ft_print_extra(t_print *table, int len)
 	int		j;
 
 	if ((table->type == 'x' && table->alt == 1) || table->type == 'p')
-		ft_putcstr_len("0x", 2, table);
+		ft_putstr_count("0x", 2, table);
 	if (table->type == 'X' && table->alt == 1)
-		ft_putcstr_len("0X", 2, table);
+		ft_putstr_count("0X", 2, table);
 	if (table->minus == 0 && table->zero == 1)
-		print_width(table, len);
+		ft_print_width(table, len);
 	if (table->dot == 1)
 	{
 		j = table->prc;
@@ -68,7 +69,7 @@ static void	ft_print_extra(t_print *table, int len)
 	}
 }
 
-void		ft_print_flags(t_print	*table, int len, char *str)
+void	ft_print_flags(char *str, int len, t_print	*table)
 {
 	if (((table->type == 'x' || table->type == 'X') && table->alt == 1) ||
 			table->type == 'p')
@@ -83,7 +84,7 @@ void		ft_print_flags(t_print	*table, int len, char *str)
 		ft_putchar_count(' ', table);
 	ft_print_extra(table, len);
 	if (!(table->dot == 1 && table->prc == 0))
-		ft_putcstr_count(str, len, table);
+		ft_putstr_count(str, len, table);
 	if (table->minus == 1)
 		ft_print_width(table, len);
 }
