@@ -27,7 +27,8 @@ all: 		$(NAME)
 
 bonus:		all
 
-clean:		@rm -f $(OBJS)
+clean:		
+			rm -f $(OBJS)
 
 fclean: 	clean
 			$(RM) $(NAME)

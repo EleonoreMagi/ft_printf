@@ -6,7 +6,7 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:01:37 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:32:14 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 16:54:24 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int	ft_strlen(char *str);
 int	ft_isdigit(int c);
 void	ft_putchar_count(char c, t_print *table);
 void ft_putstr_count(char *str, int len, t_print *table);
-static void	ft_print_width(t_print *table, int len);
-static void	ft_print_extra(t_print *table, int len);
+void	ft_print_width(t_print *table, int len);
+void	ft_print_extra(t_print *table, int len);
 void	ft_print_flags(char *str, int len, t_print	*table);
 
 #endif

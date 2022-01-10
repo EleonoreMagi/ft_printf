@@ -6,7 +6,7 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/10 01:55:03 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:36:45 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 16:54:12 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	ft_putstr_count(char *str, int len, t_print *table)
 	}
 }
 
-static void	ft_print_width(t_print *table, int len)
+void	ft_print_width(t_print *table, int len)
 {
 	if (table->sign == '-' || (table->plus == 1 && table->sign == '+') ||
 		(table->space == 1 && table->plus == 0 && table->sign == '+'))
@@ -51,7 +51,7 @@ static void	ft_print_width(t_print *table, int len)
 	}
 }
 
-static void	ft_print_extra(t_print *table, int len)
+void	ft_print_extra(t_print *table, int len)
 {
 	int		j;
 

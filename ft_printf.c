@@ -6,7 +6,7 @@
 /*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/27 21:00:51 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:33:35 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 17:42:54 by eleon            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ int	ft_evaluate_flags(const char *format, t_print *table, int i)
 {
 	int		pos;
 
-	pos = 0;
+	pos = i;
 	while (!ft_is_type(format[pos]))
 		pos += ft_parse_flag(format, pos, table);
 	ft_parse_type(format[pos], table);
