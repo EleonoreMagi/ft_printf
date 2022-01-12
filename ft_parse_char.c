@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_parse_char.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmillan <dmillan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/06 02:35:01 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:25:32 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/10 23:29:10 by dmillan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "ft_printf.h"
+#include "ft_printf.h"
 
 void	ft_align_char(t_print *table, int minus)
 {

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_types.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmillan <dmillan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 04:19:06 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:33:40 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/11 01:53:16 by dmillan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "ft_printf.h"
+#include "ft_printf.h"
 
 int	ft_is_type(int c)
 {
@@ -19,7 +19,7 @@ int	ft_is_type(int c)
 		|| (c == 'x') || (c == 'X') || (c == '%'));
 }
 
-t_print *ft_clear_table(t_print	*table)
+t_print	*ft_clear_table(t_print	*table)
 {
 	table->zero = 0;
 	table->width = 0;
@@ -30,6 +30,7 @@ t_print *ft_clear_table(t_print	*table)
 	table->alt = 0;
 	table->space = 0;
 	table->plus = 0;
+	table->is_zero = 0;
 	return (table);
 }
 

@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_flags.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: eleon <eleon@student.42.fr>                +#+  +:+       +#+        */
+/*   By: dmillan <dmillan@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/02 03:07:18 by eleon             #+#    #+#             */
-/*   Updated: 2022/01/10 06:22:17 by eleon            ###   ########.fr       */
+/*   Updated: 2022/01/11 04:29:48 by dmillan          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
- #include "ft_printf.h"
+#include "ft_printf.h"
 
 void	ft_flag_minus(t_print	*table)
 {
@@ -37,11 +37,8 @@ void	ft_flag_width(t_print	*table)
 int	ft_flag_dot(const char *format, int start,
 		t_print *table)
 {
-	int	i;
-
 	table->dot = 1;
-	i = start;
-	if (format[++i] == '*')
+	if (format[start] == '*')
 	{
 		table->prc = va_arg(table->args, int);
 		if (table->prc < 0)
@@ -49,14 +46,16 @@ int	ft_flag_dot(const char *format, int start,
 			table->dot = 0;
 			table->prc = 0;
 		}
-		i++;
 	}
+	else if (format[start] == '-')
+		table->dot = 0;
 	else
 	{
-		while (ft_isdigit(format[++i]))
-			table->prc = (table->prc * 10) + (format[i] - '0');
+		while (ft_isdigit(format[start]))
+			table->prc = (table->prc * 10) + (format[start++] - '0');
+		start--;
 	}
-	return (i);
+	return (start);
 }
 
 int	ft_flag_digit(const char *format, int start,
@@ -65,9 +64,7 @@ int	ft_flag_digit(const char *format, int start,
 	int	i;
 
 	i = start;
-	while (ft_isdigit(format[++i]))
-	{
-		table->width = (table->width * 10) + (format[i] - '0');
-	}
-	return (i);
+	while (ft_isdigit(format[i]))
+		table->width = (table->width * 10) + (format[i++] - '0');
+	return (i - 1);
 }
